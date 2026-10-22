@@ -1,0 +1,645 @@
+<title>Área de Miembros Dios y Yo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Lato:wght@400;700;900&display=swap">
+<style>
+/* Layout: estudio editorial arriba; debajo, un prototipo "noche" a ancho completo que se navega como app de streaming; luego la investigación. */
+:root{
+  /* Dios y Yo — "El Brote". Tokens del kit impreso, recalibrados. */
+  --bg:#FBF6F0; --surface:#FFFFFF; --sunk:#F4EBE5; --ink:#2E1F23; --ink-2:#5F4A50;
+  --vino:#8C3A5A; --vino-ink:#FFFFFF; --ciruela:#5E2440; --blush:#F3D9DD; --rule:#E8B4BC;
+  --gold:#C9A45C; --salvia:#48553F; --warn:#FFD79A;
+  /* La app de streaming vive en "noche" en los dos temas: es el escenario. */
+  --app-bg:#150A10; --app-surface:#24121B; --app-raise:#2F1824; --app-ink:#F7EDE9; --app-ink-2:#D3BDC4;
+  --app-accent:#E9A0B8; --app-accent-ink:#2E1F23; --app-rule:#4A2E3A;
+  --display:"Playfair Display",Georgia,"Times New Roman",serif;
+  --body:"Lato",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r-card:14px; --r-ctl:12px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1E0E15; --surface:#2A1520; --sunk:#38202C; --ink:#F7EDE9; --ink-2:#D3BDC4;
+  --vino:#E9A0B8; --vino-ink:#2E1F23; --ciruela:#F3D9DD; --blush:#38202C; --rule:#6B4A57;
+  --gold:#C9A45C; --salvia:#B3C9A6; --warn:#FFD79A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1E0E15; --surface:#2A1520; --sunk:#38202C; --ink:#F7EDE9; --ink-2:#D3BDC4;
+  --vino:#E9A0B8; --vino-ink:#2E1F23; --ciruela:#F3D9DD; --blush:#38202C; --rule:#6B4A57;
+  --gold:#C9A45C; --salvia:#B3C9A6; --warn:#FFD79A; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--display);font-weight:600;line-height:1.15;margin:0;text-wrap:balance;color:var(--ciruela)}
+p{margin:0}
+a{color:var(--vino)}
+:focus-visible{outline:3px solid var(--vino);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{font-size:13px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--vino)}
+.lede{font-size:19px;color:var(--ink-2);max-width:62ch}
+
+/* ---------- portada del estudio ---------- */
+.intro{padding-block:48px 28px;display:grid;gap:18px}
+.intro h1{font-size:clamp(34px,6vw,58px);letter-spacing:-.01em}
+.intro h1 em{font-style:italic;color:var(--vino)}
+.brote{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:18px;color:var(--ciruela)}
+.brote svg{width:28px;height:28px}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.toc a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1.5px solid var(--rule);border-radius:999px;text-decoration:none;font-weight:700;font-size:15px;color:var(--ink)}
+.toc a:hover{border-color:var(--vino);color:var(--vino)}
+
+/* ---------- escenario del prototipo ---------- */
+.stage{background:var(--app-bg);color:var(--app-ink);margin-top:12px}
+.stage-inner{max-width:1280px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 8px}
+.stage-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding-bottom:14px;border-bottom:1px solid var(--app-rule)}
+.stage-bar p{font-size:14px;color:var(--app-ink-2)}
+.seg{display:inline-flex;background:var(--app-surface);border:1px solid var(--app-rule);border-radius:999px;padding:4px;gap:4px}
+.seg button{min-height:40px;padding:0 14px;border:0;border-radius:999px;background:transparent;color:var(--app-ink-2);font:700 14px var(--body);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--app-accent);color:var(--app-accent-ink)}
+
+.app{position:relative;padding-block:6px 96px}
+.topnav{display:flex;align-items:center;gap:20px;padding-block:16px}
+.logo{display:flex;align-items:center;gap:8px;font-family:var(--display);font-size:22px;font-weight:700;color:var(--app-ink)}
+.logo svg{width:26px;height:26px}
+.topnav nav{display:flex;gap:18px;font-size:15px;color:var(--app-ink-2)}
+.topnav nav span[aria-current]{color:var(--app-ink);font-weight:700}
+.topnav .me{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--app-ink-2)}
+.avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--app-accent);color:var(--app-accent-ink);font-weight:900;font-family:var(--display)}
+@media (max-width:760px){.topnav nav,.topnav .me span{display:none}}
+
+/* hero */
+.hero{position:relative;border-radius:20px;overflow:hidden;min-height:340px;display:grid;align-items:end;background:
+  radial-gradient(120% 90% at 85% 10%,#8C3A5A 0%,transparent 55%),
+  radial-gradient(90% 80% at 10% 100%,#5E2440 0%,transparent 60%),
+  linear-gradient(160deg,#3B1428,#150A10)}
+.hero .verse{position:absolute;right:4%;top:8%;font-family:var(--display);font-style:italic;font-size:clamp(70px,14vw,170px);line-height:.9;color:rgba(247,237,233,.07);text-align:right;pointer-events:none;user-select:none}
+.hero-body{position:relative;padding:28px;display:grid;gap:12px;max-width:640px}
+.hero .tag{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--app-accent)}
+.hero h2{color:var(--app-ink);font-size:clamp(30px,5vw,48px)}
+.hero blockquote{margin:0;font-family:var(--display);font-style:italic;font-size:19px;color:var(--app-ink);max-width:48ch}
+.hero cite{display:block;font-style:normal;font-family:var(--body);font-size:14px;color:var(--app-ink-2);margin-top:4px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 22px;border-radius:var(--r-ctl);border:0;font:900 16px var(--body);cursor:pointer;text-decoration:none}
+.btn svg{width:20px;height:20px}
+.btn.primary{background:var(--app-ink);color:#24121B}
+.btn.ghost{background:rgba(247,237,233,.14);color:var(--app-ink)}
+.btn.accent{background:var(--app-accent);color:var(--app-accent-ink)}
+.week{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--app-ink-2);margin-top:4px}
+.week i{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--app-accent);display:inline-block}
+.week i.on{background:var(--app-accent)}
+
+/* filas */
+.row{margin-top:30px}
+.row-head{display:flex;align-items:baseline;gap:12px;margin-bottom:12px}
+.row-head h3{color:var(--app-ink);font-size:22px}
+.row-head .note{font-size:14px;color:var(--app-ink-2)}
+.row-head .pro{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:900;color:var(--app-accent);white-space:nowrap}
+.rail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;scrollbar-width:thin;scrollbar-color:var(--app-rule) transparent}
+.rail::-webkit-scrollbar{height:6px}.rail::-webkit-scrollbar-thumb{background:var(--app-rule);border-radius:9px}
+
+.card{flex:0 0 auto;scroll-snap-align:start;border:0;padding:0;background:none;color:inherit;text-align:left;cursor:pointer;font:inherit;display:grid;gap:8px}
+.card:hover .cover{transform:translateY(-3px)}
+.cover{position:relative;border-radius:var(--r-card);overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:14px;transition:transform .2s ease-out;box-shadow:0 8px 22px rgba(0,0,0,.35)}
+.cover .k{font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;opacity:.85}
+.cover .t{font-family:var(--display);font-weight:700;line-height:1.05}
+.cover .leaf{position:absolute;right:-10px;bottom:-10px;width:90px;height:90px;opacity:.16}
+.portrait{width:150px}.portrait .cover{aspect-ratio:2/3}.portrait .t{font-size:22px}
+.wide{width:280px}.wide .cover{aspect-ratio:16/9}.wide .t{font-size:22px}
+.square{width:150px}.square .cover{aspect-ratio:1/1}.square .t{font-size:26px}
+@media (max-width:600px){.portrait{width:128px}.portrait .t{font-size:19px}.wide{width:240px}.square{width:128px}}
+.meta{font-size:14px;color:var(--app-ink-2);line-height:1.35}
+.meta b{color:var(--app-ink);font-weight:700;display:block;font-size:15px}
+.bar{height:4px;border-radius:4px;background:rgba(247,237,233,.18);overflow:hidden}
+.bar span{display:block;height:100%;background:var(--app-accent)}
+.badge{position:absolute;left:10px;top:10px;display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
+.badge.nuevo{background:var(--app-accent);color:var(--app-accent-ink)}
+.badge.lock{background:rgba(21,10,16,.78);color:var(--app-ink)}
+.badge svg{width:12px;height:12px}
+.locked .cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(21,10,16,.55))}
+
+/* paletas de portada: sólo tonos de la marca */
+.c-vino{background:linear-gradient(155deg,#A04B6C,#5E2440);color:#FBF6F0}
+.c-ciruela{background:linear-gradient(155deg,#5E2440,#2A0F1D);color:#FBF6F0}
+.c-salvia{background:linear-gradient(155deg,#6F7D63,#2F3829);color:#FBF6F0}
+.c-arena{background:linear-gradient(155deg,#F4EBE5,#E8CFC4);color:#2E1F23}
+.c-blush{background:linear-gradient(155deg,#F9ECEE,#E8B4BC);color:#4A1C33}
+.c-dorado{background:linear-gradient(155deg,#E3C98F,#B58D46);color:#2E1F23}
+.c-noche{background:linear-gradient(155deg,#3B1428,#150A10);color:#F7EDE9;outline:1px solid #4A2E3A;outline-offset:-1px}
+
+/* barra inferior móvil */
+.tabbar{display:none}
+@media (max-width:760px){
+  .tabbar{display:flex;position:sticky;bottom:0;z-index:5;margin-top:24px;justify-content:space-around;background:rgba(21,10,16,.96);border-top:1px solid var(--app-rule);padding-block:6px calc(6px + env(safe-area-inset-bottom,0px))}
+  .tabbar span{display:grid;justify-items:center;gap:2px;min-width:64px;min-height:52px;align-content:center;font-size:12px;color:var(--app-ink-2)}
+  .tabbar span[aria-current]{color:var(--app-accent);font-weight:900}
+  .tabbar svg{width:24px;height:24px}
+}
+
+/* hoja de detalle */
+.sheet[hidden]{display:none!important}
+.sheet{position:fixed;inset:0;z-index:30;display:grid;place-items:end center;background:rgba(10,4,8,.6);padding-top:env(safe-area-inset-top,0px)}
+.sheet-card{width:min(720px,100%);max-height:88vh;overflow:auto;background:var(--app-surface);color:var(--app-ink);border-radius:22px 22px 0 0;padding:0 0 calc(20px + env(safe-area-inset-bottom,0px))}
+@media (min-width:761px){.sheet{place-items:center}.sheet-card{border-radius:22px}}
+.sheet-top{position:relative;min-height:180px;display:flex;align-items:end;padding:20px 22px}
+.sheet-top h4{color:inherit;font-size:30px;position:relative}
+.sheet-top .k{position:relative;display:block;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;opacity:.85;margin-bottom:6px}
+.close{position:absolute;right:12px;top:12px;width:48px;height:48px;border-radius:50%;border:0;background:rgba(21,10,16,.6);color:#F7EDE9;cursor:pointer;display:grid;place-items:center;z-index:2}
+.close svg{width:22px;height:22px}
+.sheet-body{padding:18px 22px;display:grid;gap:16px}
+.sheet-body p{color:var(--app-ink-2)}
+.list{display:grid;gap:2px;margin:0;padding:0;list-style:none}
+.list li{display:flex;align-items:center;gap:12px;min-height:56px;padding:6px 10px;border-radius:10px;background:var(--app-raise)}
+.list li .n{width:28px;text-align:center;font-family:var(--display);color:var(--app-accent);font-size:18px}
+.list li .x{flex:1;min-width:0}
+.list li .x b{display:block;font-weight:700}
+.list li .x small{color:var(--app-ink-2);font-size:13px}
+.list li .ic{width:22px;height:22px;color:var(--app-ink-2)}
+.player{display:grid;gap:10px;background:var(--app-raise);border-radius:14px;padding:16px}
+.player .ctl{display:flex;align-items:center;justify-content:center;gap:18px}
+.round{width:56px;height:56px;border-radius:50%;border:1.5px solid var(--app-rule);background:transparent;color:var(--app-ink);display:grid;place-items:center;cursor:pointer}
+.round.big{width:72px;height:72px;border:0;background:var(--app-accent);color:var(--app-accent-ink)}
+.round svg{width:26px;height:26px}
+.times{display:flex;justify-content:space-between;font-size:13px;color:var(--app-ink-2);font-variant-numeric:tabular-nums}
+.upsell{display:grid;gap:10px;border:1.5px solid var(--app-accent);border-radius:14px;padding:16px}
+.upsell b{font-family:var(--display);font-size:20px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--app-ink);color:#24121B;font-weight:700;padding:12px 18px;border-radius:12px;z-index:40;max-width:calc(100% - 32px)}
+
+.seg-solo{min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--app-rule);background:var(--app-surface);color:var(--app-ink-2);font:700 14px var(--body);cursor:pointer;margin-right:auto}
+.seg-solo[aria-pressed="true"]{background:var(--app-accent);color:var(--app-accent-ink);border-color:var(--app-accent)}
+.app.big .meta{font-size:16px}.app.big .meta b{font-size:18px}.app.big .row-head h3{font-size:27px}.app.big .row-head .note{font-size:16px}
+.app.big .hero blockquote{font-size:23px}.app.big .portrait{width:170px}.app.big .wide{width:310px}.app.big .square{width:170px}
+code{font-size:.9em;background:var(--sunk);padding:1px 6px;border-radius:6px}
+/* ---------- investigación ---------- */
+section.study{padding-block:56px 8px;display:grid;gap:22px}
+section.study>h2{font-size:clamp(28px,4.4vw,40px)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+.panel{background:var(--surface);border:1px solid var(--rule);border-radius:16px;padding:20px;display:grid;gap:10px;align-content:start;min-width:0}
+.panel h3{font-size:21px}
+.panel ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.panel p,.panel li{color:var(--ink-2)}
+.panel li b,.panel p b{color:var(--ink)}
+.pill{display:inline-flex;align-items:center;min-height:26px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
+.pill.si{background:var(--salvia);color:var(--bg)}
+.pill.no{background:var(--sunk);color:var(--ink)}
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);border-radius:16px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:15px}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);background:var(--sunk)}
+td:first-child{font-weight:700;color:var(--ink);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.ok{color:var(--salvia);font-weight:900}.mid{color:var(--ink-2)}
+.dodont{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+.dodont .panel.do{border-left:5px solid var(--salvia)}
+.dodont .panel.dont{border-left:5px solid var(--vino)}
+.refs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px}
+.ref{display:grid;gap:4px;padding:14px 16px;border:1px solid var(--rule);border-radius:12px;background:var(--surface);text-decoration:none;color:var(--ink);min-width:0}
+.ref b{color:var(--vino)}
+.ref span{font-size:14px;color:var(--ink-2)}
+.ref small{font-size:12px;color:var(--ink-2);overflow-wrap:anywhere}
+.road{display:grid;gap:12px;counter-reset:fase}
+.road .panel{grid-template-columns:auto 1fr;column-gap:16px}
+.road .num{font-family:var(--display);font-size:34px;color:var(--vino);line-height:1;grid-row:span 3}
+.sources{font-size:13px;color:var(--ink-2);columns:2 320px;column-gap:28px}
+.sources a{overflow-wrap:anywhere}
+footer{padding-block:40px 56px;color:var(--ink-2);font-size:14px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-brote" viewBox="0 0 32 32"><path d="M16 29V15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M16 17c0-6 4-10 11-10 0 7-4 10-11 10Z" fill="currentColor"/><path d="M16 21c0-5-3-8-9-8 0 5 3 8 9 8Z" fill="currentColor" opacity=".7"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5L8 5.5Z" fill="currentColor"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M11 7 6 12l5 5M6 12h12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-fwd" viewBox="0 0 24 24"><path d="M13 7l5 5-5 5M18 12H6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z M14 3v4h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-ear" viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2M4 14h3v6H5a1 1 0 0 1-1-1v-5Zm16 0h-3v6h2a1 1 0 0 0 1-1v-5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v9h-5v-6H9v6H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-books" viewBox="0 0 24 24"><path d="M5 4h4v16H5zM10 4h4v16h-4zM15.5 5l3.5-1 2.5 15.5-3.5 1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-group" viewBox="0 0 24 24"><circle cx="9" cy="9" r="3.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17" cy="10" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0M14.5 19a4 4 0 0 1 6.5-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<header class="wrap intro">
+  <span class="brote"><svg aria-hidden="true"><use href="#i-brote"/></svg>Dios y Yo · estudo de produto · outubro 2026</span>
+  <h1>Uma biblioteca que ela abre <em>todo dia</em>, não um link de download.</h1>
+  <p class="lede">Levantamento de áreas de membros estilo streaming, referências do nicho cristão e um protótipo navegável com nossos produtos reais, nossa paleta e nossa tipografia. O protótipo está em espanhol porque é a tela que a cliente vai ver. Toque em qualquer capa para abrir.</p>
+  <nav class="toc" aria-label="Secciones">
+    <a href="#resumo">Resumo</a><a href="#prototipo">Protótipo</a>
+    <a href="#plataformas">Plataformas</a>
+    <a href="#patrones">Patrones Netflix</a>
+    <a href="#nicho">Nicho cristão</a>
+    <a href="#visual">Linguagem visual</a>
+    <a href="#decision">Decisão e roadmap</a>
+  </nav>
+</header>
+
+<section class="stage" id="prototipo" aria-label="Prototipo navegable">
+  <div class="stage-inner">
+    <div class="stage-bar">
+      <p>Protótipo · dados de exemplo. Troque quem está olhando:</p>
+      <button type="button" class="seg-solo" id="big" aria-pressed="false">Letra grande</button>
+      <div class="seg" role="group" aria-label="Persona">
+        <button type="button" id="p-kit" aria-pressed="true">Compró el kit</button>
+        <button type="button" id="p-pro" aria-pressed="false">Coordinadora Pro</button>
+      </div>
+    </div>
+
+    <div class="app" id="app">
+      <div class="topnav">
+        <span class="logo"><svg aria-hidden="true" style="color:var(--app-accent)"><use href="#i-brote"/></svg>Dios y Yo</span>
+        <nav aria-label="App"><span aria-current="page">Inicio</span><span>Mi biblioteca</span><span>Escuchar</span><span>Mi grupo</span></nav>
+        <span class="me"><span id="saludo">Hola, Marisol</span><span class="avatar" aria-hidden="true">M</span></span>
+      </div>
+
+      <div class="hero">
+        <div class="verse" aria-hidden="true">23</div>
+        <div class="hero-body">
+          <span class="tag"><svg width="16" height="16" aria-hidden="true"><use href="#i-brote"/></svg>Para hoy · jueves 22 de octubre</span>
+          <h2>Salmo 23</h2>
+          <blockquote>«El Señor es mi pastor; nada me faltará.»<cite>Salmo 23:1 · audio de 4 min con reflexión</cite></blockquote>
+          <div class="actions">
+            <button class="btn primary" type="button" data-open="salmo-23"><svg aria-hidden="true"><use href="#i-play"/></svg>Escuchar</button>
+            <button class="btn ghost" type="button" id="share"><svg aria-hidden="true"><use href="#i-share"/></svg>Compartir versículo</button>
+          </div>
+          <div class="week" aria-label="Esta semana: 4 de 7 días">
+            <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i>
+            <span>4 días esta semana</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="rows"></div>
+
+      <div class="tabbar" aria-hidden="true">
+        <span aria-current="page"><svg><use href="#i-home"/></svg>Inicio</span>
+        <span><svg><use href="#i-books"/></svg>Biblioteca</span>
+        <span><svg><use href="#i-ear"/></svg>Escuchar</span>
+        <span><svg><use href="#i-group"/></svg>Mi grupo</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet-card" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+    <div class="sheet-top" id="sheet-top">
+      <button class="close" type="button" id="close" aria-label="Cerrar"><svg><use href="#i-x"/></svg></button>
+      <div><span class="k" id="sheet-k"></span><h4 id="sheet-title"></h4></div>
+    </div>
+    <div class="sheet-body" id="sheet-body"></div>
+  </div>
+</div>
+
+<main class="wrap">
+
+<section class="study" id="resumo">
+  <span class="eyebrow">Em uma frase</span>
+  <h2>Construir a nossa, em cima do que já existe, com a anatomia do Netflix e o ritmo diário dos apps cristãos.</h2>
+  <div class="cols">
+    <div class="panel"><h3>Por que a nossa</h3><p>Login, webhook da Hotmart, biblioteca, player de áudio e cadeado de upsell <b>já estão prontos</b> no branch <code>miembros-v1</code>. As plataformas do mercado foram feitas para <b>vídeo</b>; o nosso catálogo é PDF e áudio.</p></div>
+    <div class="panel"><h3>O que copiar do Netflix</h3><p><b>Banner fixo</b> com uma coisa só, <b>fileiras</b> roláveis por tema, <b>"Sigue donde lo dejaste"</b> em 2º lugar com barra de progresso, <b>selos</b> ("Nuevo", "Hoy"), capas pensadas para o tamanho do card.</p></div>
+    <div class="panel"><h3>O que copiar dos apps cristãos</h3><p>Um <b>"momento de hoy"</b> de 5 minutos no topo, <b>versículo para compartilhar no WhatsApp</b>, constância gentil (dias na semana, sem zerar), planos curtos de 7 dias e coleções sazonais.</p></div>
+  </div>
+</section>
+
+<section class="study" id="plataformas">
+  <span class="eyebrow">1 · Plataformas de área de membros</span>
+  <h2>O que o mercado oferece</h2>
+  <p class="lede">Preços variam muito entre fontes (vários são blogs de concorrentes). Confirme no site oficial antes de decidir. ✓ confirmado · ? não confirmado · ✗ ausente segundo as fontes.</p>
+  <div class="tablewrap" role="region" aria-label="Comparativo de plataformas" tabindex="0">
+    <table>
+      <thead><tr><th>Plataforma</th><th>Entrada</th><th>Vitrine tipo Netflix</th><th>App</th><th>Domínio próprio</th><th>Continuar</th><th>Comunidade</th><th>Gamificação</th><th>Hotmart</th></tr></thead>
+      <tbody>
+        <tr><td>Hotmart Club — hotmart.com</td><td>grátis</td><td class="ok">✓ até 9 seções, capas vert./horiz.</td><td class="ok">✓ app Hotmart</td><td class="mid">?</td><td class="ok">✓</td><td class="ok">✓</td><td class="mid">?</td><td>nativa</td></tr>
+        <tr><td>Kiwify — kiwify.com.br</td><td>grátis · 8,99% + R$2,49/venda</td><td class="ok">✓ banners e seções</td><td class="ok">✓</td><td class="ok">✓</td><td class="ok">✓</td><td class="mid">?</td><td class="mid">?</td><td>n/a</td></tr>
+        <tr><td>Astron — astronmembers.com.br</td><td>grátis (10) · R$147</td><td class="ok">✓ "catálogo streaming"</td><td class="ok">✓</td><td class="ok">✓</td><td class="mid">?</td><td class="ok">✓</td><td class="mid">?</td><td class="ok">✓</td></tr>
+        <tr><td>MemberKit — memberkit.com.br</td><td>R$197 + R$0,30/membro</td><td class="ok">✓ categorias</td><td class="mid">?</td><td class="ok">✓</td><td class="mid">?</td><td>comentários</td><td class="ok">✓ pontos e ranking</td><td class="ok">✓</td></tr>
+        <tr><td>Cademí — cademi.com.br</td><td>~R$97 (fonte concorrente)</td><td class="mid">?</td><td class="mid">✗?</td><td class="mid">?</td><td class="mid">?</td><td class="mid">?</td><td>básica</td><td class="ok">✓</td></tr>
+        <tr><td>Kajabi — kajabi.com</td><td>US$143</td><td>tema pago (US$199)</td><td>Growth/Pro</td><td class="ok">✓</td><td class="mid">?</td><td class="ok">✓</td><td class="mid">?</td><td>✗</td></tr>
+        <tr><td>Uscreen — uscreen.tv</td><td>US$49–149</td><td class="ok">✓</td><td>add-on</td><td class="ok">✓</td><td class="mid">?</td><td class="mid">?</td><td class="mid">?</td><td>✗</td></tr>
+        <tr><td>Circle — circle.so</td><td>US$89</td><td>✗</td><td>só Plus</td><td class="ok">✓</td><td class="mid">?</td><td class="ok">✓</td><td class="ok">✓</td><td>✗</td></tr>
+        <tr><td>Skool — skool.com</td><td>US$9 + 10%</td><td>✗</td><td class="mid">?</td><td class="mid">?</td><td class="mid">?</td><td class="ok">✓</td><td class="ok">✓ níveis</td><td>✗</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="cols">
+    <div class="panel"><h3>Melhor plano B: Hotmart Club</h3><p>Grátis, já tem "Continuar assistindo", "Minhas compras" e "Produtos à venda" com checkout dentro do Club. Limite: pouca personalização e feito para vídeo.</p></div>
+    <div class="panel"><h3>Upsell que funciona</h3><p>Itens bloqueados <b>misturados nas fileiras</b>, com cadeado (Kourses) e <b>prévia</b> antes do checkout: 3 páginas do PDF ou 30 s do áudio. Checkout Hotmart com dados pré-preenchidos.</p></div>
+  </div>
+</section>
+
+<section class="study" id="patrones">
+  <span class="eyebrow">2 · Padrões Netflix</span>
+  <h2>O que copiar e o que deixar de fora</h2>
+  <div class="dodont">
+    <div class="panel do"><h3>Copiar</h3><ul>
+      <li><b>Home em fileiras</b>: escolher fileiras, preencher e ordenar, buscando relevância com diversidade (Netflix Tech Blog). Poucas fileiras, sem repetir o mesmo item.</li>
+      <li><b>"Continuar"</b> na 2ª ou 3ª posição, com botão para tirar um item dela (o Netflix adicionou depois de reclamações).</li>
+      <li><b>Capas desenhadas para o card</b>: título grande, legível a 128 px. O Netflix trocou arte de pôster porque não funcionava na grade do celular.</li>
+      <li><b>Selos no card</b>: "Nuevo", "Hoy", "Recomendada".</li>
+      <li><b>Barra de progresso</b>: efeito gradiente de meta, as pessoas aceleram perto do fim (Kivetz, 2006).</li>
+    </ul></div>
+    <div class="panel dont"><h3>Deixar de fora</h3><ul>
+      <li><b>Autoplay de trailer</b>: tanta reclamação que o Netflix passou a deixar desligar (2020). Público no celular, com dados limitados.</li>
+      <li><b>Banner rotativo automático</b>: o NN/g mostra que irrita e prejudica quem tem menos destreza motora. Use banner fixo.</li>
+      <li><b>Cards que expandem</b>: o redesign de 2025 recebeu crítica por mostrar menos opções.</li>
+      <li><b>Ler PDF como vídeo</b>: no celular a compreensão é igual, mas a leitura é mais lenta. Mostre tempo de leitura e guarde a página.</li>
+    </ul></div>
+  </div>
+  <div class="cols">
+    <div class="panel"><h3>Retenção, com número</h3><ul>
+      <li>MOOCs: <b>3,13%</b> de conclusão, contra <b>46%</b> de quem pagou o certificado (MIT). Pagar pesa mais que o design.</li>
+      <li>Duolingo: aposta de sequência <b>+14%</b> retenção no 7º dia; separar meta diária da sequência <b>+3,3%</b> no 14º.</li>
+      <li>Cursos com cronograma: <b>59,5%</b> de conclusão vs 44,5% self-paced (Ruzuku, concorrente).</li>
+    </ul></div>
+    <div class="panel"><h3>Áudio é o nosso vídeo</h3><p>Progresso salvo por faixa, mini-player persistente e velocidade valem mais que preview. Referências: Spotify (retoma de onde parou), Dwell (troca voz e música sem perder o lugar), Hallow (intenção pessoal sobre o player).</p></div>
+  </div>
+</section>
+
+<section class="study" id="nicho">
+  <span class="eyebrow">3 · Nicho cristão</span>
+  <h2>Quem faz bem e por que voltam todo dia</h2>
+  <div class="tablewrap" role="region" aria-label="Apps cristãos de referência" tabindex="0">
+    <table>
+      <thead><tr><th>App</th><th>Modelo</th><th>O que faz voltar</th><th>Para levar</th></tr></thead>
+      <tbody>
+        <tr><td>YouVersion — bible.com</td><td>grátis · +1 bi instalações</td><td>Versículo do dia, planos, streak com "Perfect Weeks"</td><td>Imagem do versículo: 1,8 mi criadas no 1º mês</td></tr>
+        <tr><td>Hallow — hallow.com</td><td>US$69,99/ano · católico</td><td>Streak, desafios sazonais (Quaresma: +1 mi pessoas)</td><td>Visual de app de música, layout que respira</td></tr>
+        <tr><td>Glorify</td><td>~US$60/ano</td><td>"Daily Worship" em checklist</td><td>Leitura em telas tipo stories</td></tr>
+        <tr><td>First 5 — Proverbs 31</td><td>grátis · mulheres</td><td>Ensino de 5 min + "My Moment"</td><td>100 mil downloads em 48 h; imagem compartilhável</td></tr>
+        <tr><td>She Reads Truth</td><td>~US$60/ano · mulheres</td><td>Planos diários com comunidade</td><td>Tipografia como protagonista</td></tr>
+        <tr><td>Dwell</td><td>US$59,99/ano</td><td>Bíblia em áudio, timer de sono</td><td>27 vozes + trilha, retoma onde parou</td></tr>
+        <tr><td>Lectio 365 — 24-7prayer.com</td><td>grátis · tem espanhol</td><td>Manhã, meio-dia e noite</td><td>Roteiro curto e baixar a semana</td></tr>
+        <tr><td>RightNow Media</td><td>por igreja</td><td>Biblioteca para grupos</td><td>Organizar por público: mulheres, crianças</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="cols">
+    <div class="panel"><h3>A lacuna</h3><p>Em espanhol, para mulheres, só existem apps pequenos de "Biblia de la Mujer" com poucas avaliações. Aviva Nuestros Corazones e Lifeway Mujeres têm conteúdo, mas não têm app. <b>Espaço aberto.</b></p></div>
+    <div class="panel"><h3>Planos curtos ganham</h3><p>Os 10 planos mais concluídos do YouVersion têm <b>7 dias ou menos</b>. Planos de 1 ano perdem 1/3 até fevereiro e metade até maio.</p></div>
+    <div class="panel"><h3>Datas fortes</h3><p>Páscoa 2025: <b>18,95 mi</b> usuários no YouVersion (+12%). Janeiro: +20% de usuários diários. Planejar Semana Santa, Día de las Madres e Navidad.</p></div>
+  </div>
+</section>
+
+<section class="study" id="visual">
+  <span class="eyebrow">4 · Linguagem visual</span>
+  <h2>Premium sem clichê</h2>
+  <div class="dodont">
+    <div class="panel do"><h3>Fazer</h3><ul>
+      <li><b>Capas tipográficas</b>: Playfair grande sobre a paleta da marca (vinho, ameixa, sálvia, dourado como fundo). É o que o protótipo usa.</li>
+      <li>Serifa no título e no versículo, Lato no resto. Mesma família dos 12 cadernos: abrir o app parece abrir o kit.</li>
+      <li>Modo escuro "noche" desenhado, não invertido. Bom para ouvir Salmos à noite.</li>
+      <li><b>Letra grande</b> oferecida no primeiro acesso; corpo 18 px; alvos de 48 px ou mais.</li>
+      <li>O broto (El Brote) como único símbolo.</li>
+    </ul></div>
+    <div class="panel dont"><h3>Evitar</h3><ul>
+      <li>Raios de luz, pombas, mão divina, trigo, fontes script: clichê de banco de imagem, agora também feito por IA.</li>
+      <li>Santos, terço, Virgem, "misa" (o público é interdenominacional; o termo é "culto").</li>
+      <li>Mural público de pedidos de oração. Sempre privado; convidar 1 ou 2 hermanas é opcional.</li>
+      <li>Depoimento ou número de usuárias inventado (regra da FTC contra avaliações falsas, 2024).</li>
+      <li>Streak que zera e pune. Melhor "4 días esta semana".</li>
+    </ul></div>
+  </div>
+  <span class="eyebrow">Referências para olhar</span>
+  <div class="refs">
+    <a class="ref" href="https://screensdesign.com/showcase/hallow-prayer-meditation" target="_blank" rel="noopener"><b>Hallow</b><span>Onboarding, player com intenção, paywall</span><small>screensdesign.com</small></a>
+    <a class="ref" href="https://screensdesign.com/showcase/glorify-devotional-prayer" target="_blank" rel="noopener"><b>Glorify</b><span>Checklist "Daily Worship"</span><small>screensdesign.com</small></a>
+    <a class="ref" href="https://screensdesign.com/showcase/bible-widget" target="_blank" rel="noopener"><b>Bible Widget</b><span>Serifa sobre fundo de papel</span><small>screensdesign.com</small></a>
+    <a class="ref" href="https://dribbble.com/uberryan" target="_blank" rel="noopener"><b>She Reads Truth</b><span>Planos e destaque de texto</span><small>dribbble.com/uberryan</small></a>
+    <a class="ref" href="https://dribbble.com/GianninaT" target="_blank" rel="noopener"><b>YouVersion redesign</b><span>Planos e widget</span><small>dribbble.com/GianninaT</small></a>
+    <a class="ref" href="https://dribbble.com/andyknight" target="_blank" rel="noopener"><b>Prayer Card</b><span>Oração guiada em áudio</span><small>dribbble.com/andyknight</small></a>
+    <a class="ref" href="https://apps.apple.com/app/id997457664" target="_blank" rel="noopener"><b>First 5</b><span>"My Moment" e imagem compartilhável</span><small>App Store</small></a>
+    <a class="ref" href="https://apps.apple.com/us/app/1343917374" target="_blank" rel="noopener"><b>Dwell</b><span>Player com voz e música</span><small>App Store</small></a>
+    <a class="ref" href="https://templates.kajabi.com/products/streamflix-product-theme" target="_blank" rel="noopener"><b>Kajabi Streamflix</b><span>Carrosséis de cursos estilo Netflix</span><small>templates.kajabi.com</small></a>
+    <a class="ref" href="https://help.hotmart.com/pt-br/article/13751605796365/" target="_blank" rel="noopener"><b>Hotmart Club vitrine</b><span>Seções padrão e tamanhos de capa</span><small>help.hotmart.com</small></a>
+    <a class="ref" href="https://dribbble.com/shots/20943626-Netflix-App-Concept-Redesign" target="_blank" rel="noopener"><b>Netflix concept</b><span>Hierarquia do hero</span><small>dribbble.com</small></a>
+    <a class="ref" href="https://baymard.com/homepage-and-category-usability/benchmark/page-types/homepage/9902-netflix" target="_blank" rel="noopener"><b>Baymard · Netflix</b><span>Home comentada</span><small>baymard.com</small></a>
+  </div>
+</section>
+
+<section class="study" id="decision">
+  <span class="eyebrow">5 · Decisão e roadmap</span>
+  <h2>Construir a nossa, em quatro fases</h2>
+  <div class="road">
+    <div class="panel"><span class="num">1</span><h3>Vitrine estilo streaming</h3><p>Trocar a grade da Mi Biblioteca pela home do protótipo: banner fixo, "Sigue donde lo dejaste", fileiras por produto e por tema, "También para ti" com cadeado e prévia. Leitor de PDF que guarda a página. Toggle "Letra grande". <b>Reaproveita</b> tabelas, webhook e player que já existem.</p></div>
+    <div class="panel"><span class="num">2</span><h3>Ritmo diário</h3><p>"Para hoy": versículo + áudio de 4 min + uma pergunta. Botão "Compartir en WhatsApp" que gera a imagem do versículo (quadrada e vertical). Contador "días esta semana". PWA instalável com notificação opcional.</p></div>
+    <div class="panel"><span class="num">3</span><h3>Planos e datas</h3><p>Planos de 7 dias com os 150 Salmos explicados ("7 días de Salmos para la ansiedad"). Coleções de Semana Santa, Día de las Madres e Navidad. Fileira "Para tu encuentro del sábado" puxada do recomendador Pro.</p></div>
+    <div class="panel"><span class="num">4</span><h3>Comunidade com cuidado</h3><p>"Mis peticiones" privado, convite opcional a 1 ou 2 hermanas. Cantinho "Para los niños". Votação do tema do mês para assinantes Pro (ideia do Angel Guild).</p></div>
+  </div>
+  <div class="cols">
+    <div class="panel"><h3>O que preciso de você</h3><ul>
+      <li>Liberar o push do repositório <b>ldercristopro</b> (a base está lá, ainda só neste ambiente).</li>
+      <li>Escolher: começo pela <b>fase 1</b> no código ou primeiro refinamos o visual deste protótipo.</li>
+      <li>Os arquivos reais (PDFs e mp3) para subir no bucket.</li>
+    </ul></div>
+    <div class="panel"><h3>Limites desta pesquisa</h3><p>As buscas trouxeram trechos das páginas; não foi possível abrir telas ou capturas. Preços divergem entre fontes. Números de fornecedores (drip, push, Hotmart) são marketing, não estudo independente.</p></div>
+  </div>
+</section>
+
+<section class="study" id="fontes">
+  <span class="eyebrow">Fontes principais</span>
+  <div class="sources">
+    <p><a href="https://help.hotmart.com/pt-br/article/13751605796365/" target="_blank" rel="noopener">Hotmart Club · vitrine</a></p>
+    <p><a href="https://ajuda.kiwify.com.br/pt-br/article/como-personalizar-a-area-de-membros-li3lyj/" target="_blank" rel="noopener">Kiwify · personalização</a></p>
+    <p><a href="https://www.astronmembers.com.br/recursos/" target="_blank" rel="noopener">Astron · recursos</a></p>
+    <p><a href="https://memberkit.com.br/blog/gamificacao" target="_blank" rel="noopener">MemberKit · gamificação</a></p>
+    <p><a href="https://gwern.net/doc/www/netflixtechblog.com/2f5717e8bbdc98d2caf5c7a972359fbb7e7c0b28.html" target="_blank" rel="noopener">Netflix Tech Blog · home em fileiras</a></p>
+    <p><a href="https://www.nngroup.com/videos/carousels-websites-mobile-apps/" target="_blank" rel="noopener">NN/g · carrosséis</a></p>
+    <p><a href="https://movieweb.com/netflix-turn-off-autoplay-previews/" target="_blank" rel="noopener">Netflix · desligar autoplay</a></p>
+    <p><a href="https://tsl.mit.edu/research/the-mooc-pivot/" target="_blank" rel="noopener">MIT · The MOOC Pivot</a></p>
+    <p><a href="https://making.duolingo.com/how-streaks-keep-duolingo-learners-committed-to-their-language-goals" target="_blank" rel="noopener">Duolingo · streaks</a></p>
+    <p><a href="https://lawsofux.com/goal-gradient-effect/" target="_blank" rel="noopener">Laws of UX · goal gradient</a></p>
+    <p><a href="https://openblog.life.church/3-best-features-in-the-bible-app-for-pastors-to-know-about/" target="_blank" rel="noopener">YouVersion · streaks e Perfect Weeks</a></p>
+    <p><a href="https://outreachmagazine.com/?p=39061" target="_blank" rel="noopener">Outreach · conclusão de planos</a></p>
+    <p><a href="https://get.bible/blog/post/how-photos-could-be-the-best-bible-illustrations-idea-40" target="_blank" rel="noopener">YouVersion · imagens de versículo</a></p>
+    <p><a href="https://www.catholicworldreport.com/2024/02/16/catholic-prayer-app-hallow-makes-history-in-app-store/" target="_blank" rel="noopener">Hallow · Quaresma 2024</a></p>
+    <p><a href="https://christianretailing.com/index.php/newsletter/latest/28182-downloads-take-off-for-lysa-terkeursts-first-5-app" target="_blank" rel="noopener">First 5 · lançamento</a></p>
+    <p><a href="https://churchmarketingsucks.com/?p=8973" target="_blank" rel="noopener">Church Marketing Sucks · clichês</a></p>
+    <p><a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2022.931646/full" target="_blank" rel="noopener">Frontiers · apps e pessoas 50+</a></p>
+    <p><a href="https://www.ftc.gov/news-events/news/press-releases/2024/08/federal-trade-commission-announces-final-rule-banning-fake-reviews-testimonials" target="_blank" rel="noopener">FTC · avaliações falsas</a></p>
+  </div>
+</section>
+
+</main>
+<footer class="wrap">Dios y Yo · estudo de área de membros · outubro 2026. Protótipo com dados de exemplo; nenhum número de usuárias ou depoimento é real.</footer>
+
+
+<script>
+(function(){
+  const leaf = '<svg class="leaf" aria-hidden="true"><use href="#i-brote"/></svg>';
+  const lockSvg = '<svg aria-hidden="true"><use href="#i-lock"/></svg>';
+
+  // Catálogo: los productos reales de la marca. Dueñas por persona.
+  const P = {
+    kit:{own:{kit:1,pro:1}},
+    "salmos-audio":{own:{kit:1,pro:1}},
+    devocional:{own:{pro:1}},
+    pasatiempos:{own:{pro:1}},
+    explicados:{own:{pro:1}},
+    ninos:{own:{}},
+    pro:{own:{pro:1}}
+  };
+  const owns = (prod, who) => !!(P[prod] && P[prod].own[who]);
+
+  const cuadernos = [
+    ["01","Kit Encuentro con Dios","Guía principal","c-ciruela"],
+    ["02","60 Dinámicas Transformadoras","Identidad · perdón · fe","c-vino"],
+    ["03","40 Dinámicas para Mujeres","Sanidad · comunidad","c-blush"],
+    ["04","60 Juegos con Propósito","Reír juntas","c-dorado"],
+    ["05","50 Dinámicas Nuevas","Mujeres de la Biblia","c-salvia"],
+    ["06","20 Dinámicas Florecer","Primeros encuentros","c-arena"],
+    ["07","Florecer donde Dios te plantó","Devocional de 30 días","c-noche"],
+    ["08","Planner de Encuentros","Tu año en una hoja","c-blush"],
+    ["09","Cómo Conducir Encuentros","Para la coordinadora","c-vino"],
+    ["10","Del Luto a la Gloria","12 dinámicas","c-ciruela"],
+    ["11","Identidad y Propósito","15 dinámicas","c-salvia"],
+    ["12","24 Estampas Cristianas","Para imprimir","c-dorado"]
+  ];
+  const salmos = [
+    ["23","El Señor es mi pastor","4:12","c-ciruela"],["27","El Señor es mi luz","5:03","c-vino"],
+    ["91","Bajo sus alas","4:48","c-noche"],["121","Alzaré mis ojos","3:20","c-salvia"],
+    ["139","Me conoces","5:36","c-blush"],["46","Dios es nuestro amparo","3:55","c-dorado"],
+    ["34","Gusten y vean","4:02","c-arena"],["103","Bendice, alma mía","4:40","c-vino"]
+  ];
+
+  function cover(cls, k, t, extra){ return `<div class="cover ${cls}">${extra||""}<span class="k">${k}</span><span class="t">${t}</span>${leaf}</div>`; }
+
+  function rowHTML(title, note, cards, proLocked){
+    return `<section class="row"><div class="row-head"><h3>${title}</h3>${note?`<span class="note">${note}</span>`:""}${proLocked?`<span class="pro">${lockSvg.replace('aria-hidden','width="14" height="14" aria-hidden')} Con Coordinadora Pro</span>`:""}</div><div class="rail">${cards.join("")}</div></section>`;
+  }
+
+  function render(who){
+    const pro = who === "pro";
+    const rows = [];
+
+    // 1. Seguir donde lo dejaste
+    const seguir = [
+      `<button class="card wide" type="button" data-open="salmo-27">${cover("c-vino","Salmo · audio","Salmo 27")}<div class="bar"><span style="width:62%"></span></div><span class="meta"><b>El Señor es mi luz</b>Te quedan 2 min</span></button>`,
+      `<button class="card wide" type="button" data-open="cuaderno-03">${cover("c-blush","Cuaderno 03","40 Dinámicas para Mujeres")}<div class="bar"><span style="width:30%"></span></div><span class="meta"><b>Página 14 de 48</b>Sección: Sanidad</span></button>`
+    ];
+    if (pro) seguir.push(`<button class="card wide" type="button" data-open="pasatiempos">${cover("c-dorado","Pasatiempos","Sopa de letras 12")}<div class="bar"><span style="width:45%"></span></div><span class="meta"><b>Los frutos del Espíritu</b>Te faltan 5 palabras</span></button>`);
+    rows.push(rowHTML("Sigue donde lo dejaste", "", seguir));
+
+    // 2. Para tu encuentro del sábado (recomendador: Pro)
+    const sab = [
+      ["Cartas de amor del Padre","35 min · 6 a 20","Identidad","c-ciruela"],
+      ["La vasija restaurada","40 min · 8 a 15","Sanidad","c-vino"],
+      ["Gratitud en voz alta","25 min · 5 a 25","Gratitud","c-salvia"],
+      ["Mujeres de la Biblia: Rut","45 min · 6 a 18","Fidelidad","c-blush"]
+    ].map((d,i)=>`<button class="card wide ${pro?"":"locked"}" type="button" data-open="${pro?"din-"+i:"pro"}">${cover(d[3],d[2],d[0], pro? (i===0?'<span class="badge nuevo">Recomendada</span>':"") : `<span class="badge lock">${lockSvg}Pro</span>`)}<span class="meta"><b>${d[1]}</b>${pro?(i===0?"Dura justo lo que tienes y no la usaste":"No la usaste con este grupo"):"El recomendador elige por ti"}</span></button>`);
+    rows.push(rowHTML("Para tu encuentro del sábado", pro?"12 mujeres · 45 min · identidad":"", sab, !pro));
+
+    // 3. Tus cuadernos
+    rows.push(rowHTML("Tus 12 cuadernos", "230 dinámicas", cuadernos.map(c=>`<button class="card portrait" type="button" data-open="cuaderno-${c[0]}">${cover(c[3],"Cuaderno "+c[0],c[1])}<span class="meta"><b>${c[2]}</b></span></button>`)));
+
+    // 4. Escuchar
+    rows.push(rowHTML("Escuchar: 31 Salmos", "para el camino o antes de dormir", salmos.map((s,i)=>`<button class="card square" type="button" data-open="salmo-${s[0]}">${cover(s[3],"Salmo",s[0], i===0?'<span class="badge nuevo">Hoy</span>':"")}<span class="meta"><b>${s[1]}</b>${s[2]}</span></button>`)));
+
+    // 5. Nuevo este mes (Pro)
+    const nuevo = [
+      ["Octubre · Gratitud","Guion del mes","4 encuentros, minuto a minuto","c-dorado"],
+      ["Lo que sí tengo","Dinámica nueva","30 min · 6 a 20","c-vino"],
+      ["El frasco de las bendiciones","Dinámica nueva","25 min · 5 a 30","c-salvia"],
+      ["Gracias en tiempos difíciles","Dinámica nueva","40 min · 6 a 15","c-ciruela"]
+    ].map(d=>`<button class="card wide ${pro?"":"locked"}" type="button" data-open="${pro?"nuevo":"pro"}">${cover(d[3],d[1],d[0], pro?'<span class="badge nuevo">Nuevo</span>':`<span class="badge lock">${lockSvg}Pro</span>`)}<span class="meta"><b>${d[2]}</b></span></button>`);
+    rows.push(rowHTML("Nuevo este mes", "llega el día 1", nuevo, !pro));
+
+    // 6. También para ti (lo que no tiene)
+    const extra = [
+      ["devocional","Biblioteca Devocional","Salmos, Proverbios y Pasatiempos","c-noche"],
+      ["pasatiempos","Pasatiempos Bíblicos","120 sopas de letras y crucigramas","c-dorado"],
+      ["explicados","150 Salmos Explicados","Versículo por versículo","c-ciruela"],
+      ["ninos","Dinámicas para Niños","10 dinámicas para la escuelita","c-blush"],
+      ["pro","Coordinadora Pro","Recomendador, grupo y modo conducción","c-vino"]
+    ].filter(d=>!owns(d[0],who));
+    if (extra.length) rows.push(rowHTML("También para ti", "", extra.map(d=>`<button class="card portrait locked" type="button" data-open="buy-${d[0]}">${cover(d[3],"Desbloquear",d[1],`<span class="badge lock">${lockSvg}No lo tienes</span>`)}<span class="meta"><b>${d[2]}</b></span></button>`)));
+
+    document.getElementById("rows").innerHTML = rows.join("");
+  }
+
+  // ---------- hoja de detalle ----------
+  const sheet = document.getElementById("sheet"), top = document.getElementById("sheet-top"),
+        sk = document.getElementById("sheet-k"), st = document.getElementById("sheet-title"),
+        sb = document.getElementById("sheet-body");
+  let who = "kit", lastFocus = null, playing = false, timer = null, pos = 0;
+
+  function setTop(cls){ top.className = "sheet-top " + cls; }
+
+  function openSheet(id){
+    lastFocus = document.activeElement; playing = false; clearInterval(timer);
+    let k="", t="", cls="c-ciruela", body="";
+    if (id.startsWith("salmo-")){
+      const n = id.slice(6), s = salmos.find(x=>x[0]===n) || [n,"Salmo","4:00","c-ciruela"];
+      k="Escuchar · 31 Salmos"; t="Salmo "+n+" · "+s[1]; cls=s[3];
+      const [m,sec] = s[2].split(":").map(Number); const total = m*60+sec; pos = n==="27"?Math.round(total*.62):0;
+      body = `<div class="player" id="player" data-total="${total}">
+        <div class="bar"><span id="pbar" style="width:${pos/total*100}%"></span></div>
+        <div class="times"><span id="pnow">${fmt(pos)}</span><span>${s[2]}</span></div>
+        <div class="ctl"><button class="round" type="button" id="rw" aria-label="Retroceder 15 segundos"><svg><use href="#i-back"/></svg></button>
+        <button class="round big" type="button" id="pp" aria-label="Reproducir"><svg><use href="#i-play"/></svg></button>
+        <button class="round" type="button" id="ff" aria-label="Adelantar 15 segundos"><svg><use href="#i-fwd"/></svg></button></div></div>
+        <p>Lectura pausada con fondo instrumental y una pregunta para llevar en el día. El progreso se guarda solo: mañana sigues donde lo dejaste.</p>
+        <button class="btn ghost" type="button" data-toast="Imagen del versículo lista para WhatsApp"><svg aria-hidden="true"><use href="#i-share"/></svg>Compartir versículo</button>`;
+    } else if (id.startsWith("cuaderno-")){
+      const n=id.slice(9), c=cuadernos.find(x=>x[0]===n)||cuadernos[0];
+      k="Cuaderno "+c[0]; t=c[1]; cls=c[3];
+      body = `<p>${c[2]}. PDF para leer en el teléfono o imprimir. Ábrelo aquí mismo; también lo puedes descargar.</p>
+        <ul class="list">${["Cómo usar este cuaderno","Sección 1","Sección 2","Sección 3"].map((x,i)=>`<li><span class="n">${i+1}</span><span class="x"><b>${x}</b><small>${i===0?"2 páginas":"10 a 15 dinámicas"}</small></span><svg class="ic" aria-hidden="true"><use href="#i-doc"/></svg></li>`).join("")}</ul>
+        <div class="actions"><button class="btn accent" type="button" data-toast="Abriendo el PDF…">Abrir cuaderno</button><button class="btn ghost" type="button" data-toast="Descarga iniciada">Descargar</button></div>`;
+    } else if (id==="pro" || id==="buy-pro"){
+      k="Coordinadora Pro"; t="Tú ya tienes las 230. Yo te digo cuál usar el sábado."; cls="c-vino";
+      body = `<ul class="list">${[["El recomendador","Dices cuántas vienen y cuánto tiempo tienes. Él elige."],["Modo conducción","Cronómetro por bloque, letra grande, la pantalla no se apaga."],["Tu grupo","Quién vino, quién está de luto, cumpleaños."],["Cada mes","4 dinámicas nuevas y el guion del mes."]].map((x,i)=>`<li><span class="n">${i+1}</span><span class="x"><b>${x[0]}</b><small>${x[1]}</small></span></li>`).join("")}</ul>
+        <div class="upsell"><b>Pruébalo con tu próximo encuentro</b><p>Cancelas cuando quieras. El precio sale del checkout, nunca escrito a mano en la app.</p><button class="btn accent" type="button" data-toast="Abre el checkout de Hotmart">Ver el plan</button></div>`;
+    } else if (id.startsWith("buy-")){
+      const map={devocional:["Biblioteca Devocional","Salmos explicados, Proverbios y Pasatiempos en un solo paquete.","c-noche"],pasatiempos:["Pasatiempos Bíblicos","120 sopas de letras y crucigramas para imprimir o resolver en la pantalla.","c-dorado"],explicados:["150 Salmos Explicados","Cada salmo, versículo por versículo, en lenguaje sencillo.","c-ciruela"],ninos:["Dinámicas para Niños","10 dinámicas para la escuelita dominical o la casa.","c-blush"]};
+      const m=map[id.slice(4)]; k="También para ti"; t=m[0]; cls=m[2];
+      body = `<p>${m[1]}</p><p>Mira tres páginas antes de decidir.</p><div class="upsell"><b>Se suma a tu biblioteca al instante</b><p>Pagas en Hotmart con el mismo correo y aparece aquí, sin descargar nada.</p><button class="btn accent" type="button" data-toast="Abre el checkout de Hotmart">Desbloquear</button></div>`;
+    } else if (id.startsWith("din-") || id==="nuevo"){
+      k = id==="nuevo"?"Guion del mes":"Recomendada para el sábado"; t = id==="nuevo"?"Octubre · Gratitud":"Cartas de amor del Padre"; cls = id==="nuevo"?"c-dorado":"c-ciruela";
+      body = `<blockquote style="margin:0;font-family:var(--display);font-style:italic;font-size:19px">«Miren cuánto amor nos ha dado el Padre.»<cite style="display:block;font-style:normal;font-family:var(--body);font-size:14px;color:var(--app-ink-2)">1 Juan 3:1</cite></blockquote>
+        <ul class="list">${[["10 min","Bienvenida"],["15 min","Lectura en silencio"],["10 min","Compartir y orar"]].map((x,i)=>`<li><span class="n">${i+1}</span><span class="x"><b>${x[1]}</b><small>${x[0]}</small></span></li>`).join("")}</ul>
+        <div class="actions"><button class="btn accent" type="button" data-toast="Modo conducción: pantalla completa">Conducir ahora</button><button class="btn ghost" type="button" data-toast="Guardada para el sábado">Guardar para el sábado</button></div>`;
+    } else if (id==="pasatiempos"){
+      k="Pasatiempos"; t="Sopa de letras 12 · Los frutos del Espíritu"; cls="c-dorado";
+      body = `<p>Gálatas 5:22. Te faltan 5 de 9 palabras.</p><div class="actions"><button class="btn accent" type="button" data-toast="Abriendo el pasatiempo…">Seguir resolviendo</button></div>`;
+    }
+    sk.textContent=k; st.textContent=t; setTop(cls); sb.innerHTML=body;
+    sheet.hidden=false; document.getElementById("close").focus();
+    wirePlayer();
+  }
+  function closeSheet(){ sheet.hidden=true; clearInterval(timer); playing=false; if(lastFocus) lastFocus.focus(); }
+  function fmt(s){ s=Math.max(0,Math.round(s)); return Math.floor(s/60)+":"+String(s%60).padStart(2,"0"); }
+  function wirePlayer(){
+    const p=document.getElementById("player"); if(!p) return;
+    const total=+p.dataset.total, bar=document.getElementById("pbar"), now=document.getElementById("pnow"), pp=document.getElementById("pp");
+    const paint=()=>{ bar.style.width=(pos/total*100)+"%"; now.textContent=fmt(pos); };
+    pp.onclick=()=>{ playing=!playing; pp.innerHTML=`<svg><use href="#i-${playing?"pause":"play"}"/></svg>`; pp.setAttribute("aria-label",playing?"Pausar":"Reproducir");
+      clearInterval(timer); if(playing) timer=setInterval(()=>{ pos=Math.min(total,pos+1); paint(); if(pos>=total){clearInterval(timer);} },1000); };
+    document.getElementById("rw").onclick=()=>{pos=Math.max(0,pos-15);paint();};
+    document.getElementById("ff").onclick=()=>{pos=Math.min(total,pos+15);paint();};
+  }
+
+  function toast(msg){ const t=document.createElement("div"); t.className="toast"; t.setAttribute("role","status"); t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2200); }
+
+  document.addEventListener("click",e=>{
+    const o=e.target.closest("[data-open]"); if(o){ openSheet(o.dataset.open); return; }
+    const t=e.target.closest("[data-toast]"); if(t){ toast(t.dataset.toast); return; }
+  });
+  document.getElementById("share").onclick=()=>toast("Imagen del versículo lista para WhatsApp");
+  document.getElementById("close").onclick=closeSheet;
+  sheet.addEventListener("click",e=>{ if(e.target===sheet) closeSheet(); });
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape" && !sheet.hidden) closeSheet(); });
+
+  const big=document.getElementById("big"), app=document.getElementById("app");
+  big.onclick=()=>{ const on=big.getAttribute("aria-pressed")!=="true"; big.setAttribute("aria-pressed",String(on)); app.classList.toggle("big",on); };
+  const bk=document.getElementById("p-kit"), bp=document.getElementById("p-pro");
+  function setWho(w){ who=w; bk.setAttribute("aria-pressed",w==="kit"); bp.setAttribute("aria-pressed",w==="pro");
+    document.getElementById("saludo").textContent = w==="pro" ? "Hola, Ana · Pro" : "Hola, Marisol"; render(w);
+    try{ localStorage.setItem("dyy-persona",w); }catch(_){} }
+  bk.onclick=()=>setWho("kit"); bp.onclick=()=>setWho("pro");
+  let start="kit"; try{ start=localStorage.getItem("dyy-persona")||"kit"; }catch(_){}
+  setWho(start==="pro"?"pro":"kit");
+})();
+</script>
